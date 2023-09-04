@@ -4,5 +4,6 @@ class Patient < ApplicationRecord
     has_many :doctors, through: :appointments
 
     validates :username, presence: true, uniqueness: true 
+    validates :email, presence: true, uniqueness: true 
     
 end
