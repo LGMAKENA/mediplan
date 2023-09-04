@@ -19,12 +19,12 @@ development:
 test:
   <<: *default
   database: db/test.sqlite3
-
+  
 production:
   <<: *default
   adapter: postgresql
-   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-   timeout: 5000
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
   database: db/mediplan # Update with your production database name
   username: mediplan # Update with your PostgreSQL username
   password: mediplan # Update with your PostgreSQL password
