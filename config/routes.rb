@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   post 'appointments',to: 'appointments#create'
 
   resources :patients 
-  resources :doctors  
+  resources :doctors   
 
   # post "patients", to: "patients#create"
   # post "doctors", to: "doctors#create" 
