@@ -28,13 +28,14 @@ class AppointmentsController < ApplicationController
   end
 
   def destroy 
-    appointment = Appointment.find_by(id: params[:appointment_id]) 
-    appointment.delete 
+    appointment = Appointment.find_by(id: params[:id]) 
+    appointment.destroy  
     head :no_content 
   end 
 
   private 
+
   def appointment_params
-    params.permit(:description)
+    params.permit(:description, :patient_id, :doctor_id) 
   end
 end

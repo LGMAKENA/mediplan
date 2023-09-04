@@ -13,15 +13,15 @@ class DoctorsController < ApplicationController
     end 
   end
 
-  def create 
-    doctor = Doctor.new(doctor_params)
-    if doctor.save 
-      session[:doctor_id] = doctor.id 
-      render json: doctor 
-    else
-      render json: { error: "Not created"}, status: :unauthorized 
-    end
-  end
+  # def create 
+  #   doctor = Doctor.new(doctor_params)
+  #   if doctor.save 
+  #     session[:doctor_id] = doctor.id 
+  #     render json: doctor 
+  #   else
+  #     render json: { error: "Not created"}, status: :unauthorized 
+  #   end
+  # end
 
   private
   def doctor_params 

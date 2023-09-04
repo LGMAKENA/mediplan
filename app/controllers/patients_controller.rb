@@ -1,4 +1,6 @@
 class PatientsController < ApplicationController
+  before_action :require_login 
+  
   def index
     patients = Patient.all 
     render json: patients 
