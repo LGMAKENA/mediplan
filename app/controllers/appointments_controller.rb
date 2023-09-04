@@ -3,7 +3,7 @@ class AppointmentsController < ApplicationController
     appointments = Appointment.all 
     render json: appointments 
   end
-
+ 
   def show 
     appointment = Appointment.find_by(id: params[:appointment_id]) 
     render json: appointment 
