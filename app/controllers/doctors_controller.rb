@@ -4,6 +4,15 @@ class DoctorsController < ApplicationController
     render json: doctors 
   end
 
+  def show 
+    doctor = Doctor.find_by(id: session[:doctor_id]) 
+    if user
+        render json: doctor, status: :created 
+    else
+        render json: { error: "not authorized here" }, status: :unauthorized 
+    end 
+  end
+
   def create 
     doctor = Doctor.new(doctor_params)
     if doctor.save 

@@ -11,7 +11,7 @@ class PatientsController < ApplicationController
     else
         render json: { error: "not authorized here" }, status: :unauthorized 
     end 
-end
+  end
 
   def create 
     patient = Patient.new(patient_params)
@@ -31,6 +31,12 @@ end
     else
       render json: { error: "Not updated"}, status: :unauthorized 
     end
+  end
+
+  def destroy 
+    patient = Patient.find_by(id: params[:patient_id])
+    patient.delete 
+    head :no_content 
   end
 
   private 
