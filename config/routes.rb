@@ -4,18 +4,19 @@ Rails.application.routes.draw do
   resources :patients
   resources :doctors  
 
-  get 'doctors',to: "doctors#index"
-  # get 'appointments',to: 'appointments#index'
-  post 'appointments',to: 'appointments#create'
+  # get 'doctors',to: "doctors#index"
+  # # get 'appointments',to: 'appointments#index'
+  # post 'appointments',to: 'appointments#create'
 
-  post "/signup", to: "doctors#create" 
+  post "/signup", to: "patients#create" 
   get "/me", to: "doctors#show"
-  post "login", to:"sessions#create"
+  get "/me", to: "patients#show"
+  post "login", to:"sessions#create" 
   delete "/logout", to: "sessions#destroy" 
+  post "loginDoc", to:"doctor_sessions#create"
+  delete "/logoutDoc", to: "doctor_sessions#destroy" 
 
-  # resources :patients  
-  # resources :doctors   
-  # resources :appointments 
+
 
   # post "patients", to: "patients#create"
   # post "doctors", to: "doctors#create" 
