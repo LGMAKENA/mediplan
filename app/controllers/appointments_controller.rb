@@ -12,30 +12,35 @@ class AppointmentsController < ApplicationController
   def create 
     appointment = Appointment.new(appointment_params) 
     if appointment.save 
-      render json: appointment 
+      render json: appointment, status: :created 
     else
       render json: { errors: appointment.errors.full_messages }, status: :unprocessable_entity
+    
     end
   end
 
   def update  
-    appointment = Appointment.update!(appointment_params) 
-    if appointment 
-      render json: appointment 
+    appointment = Appointment.find_by(id: params[:id]) 
+    if appointment.update(appointment_params) 
+      render json: appointment   
     else
-      render json: { errors: appointment.errors.full_messages }, status: :unprocessable_entity
+      render json: { "errors": "appointment not found" }, status: :not_found 
     end
   end
-
+ 
   def destroy 
     appointment = Appointment.find_by(id: params[:id]) 
+    if appointment
     appointment.destroy  
     head :no_content 
+    else
+      render json: { "errors": "appointment not found"  }, status: :not_found 
+    end
   end 
 
   private 
 
   def appointment_params
-    params.permit(:description, :patient_id, :doctor_id) 
+    params.permit(:description, :patient_id, :doctor_id, :date_time) 
   end
-end
+end 

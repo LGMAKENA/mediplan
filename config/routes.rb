@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
   resources :appointments, only: [:show, :index, :create, :update, :destroy ] 
-  resources :patients  
-  resources :doctors 
+  resources :patients
+  resources :doctors  
 
   get 'doctors',to: "doctors#index"
   # get 'appointments',to: 'appointments#index'
