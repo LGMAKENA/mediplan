@@ -14,9 +14,9 @@ puts "🌱 Seeding spices..."
 doctor1 = Doctor.create(title: "Dentist",email: "linet@test.com",full_name: "Linet Makena", username: "lgmakena",password: "Pass@123",dob: "1900-12-12",gender: "male")
 
 
-patient1 = Patient.create( full_name: "Kennedy Musau",username: "kmusau", email:"kmusau@test.com",password: "Pass@123",dob: "1990-7-12",gender: "male")
-patient2 = Patient.create( full_name: "Alex Kimathi",username: "akimathi", email:"akimathi@test.com",password: "Pass@123",dob: "1970-12-12",gender: "male")
-patient3 = Patient.create( full_name: "Angela Kulola",username: "akulola", email:"akulola@test.com",password: "Pass@123",dob: "1950-2-12",gender: "female")
+patient1 = Patient.create( username: "kmusau", email:"kmusau@test.com",password: "Pass@123",dob: "1990-7-12",gender: "male",full_name: "Kennedy Musau")
+patient2 = Patient.create( username: "akimathi", email:"akimathi@test.com",password: "Pass@123",dob: "1970-12-12",gender: "male",full_name: "Alex Kimathi")
+patient3 = Patient.create( username: "akulola", email:"akulola@test.com",password: "Pass@123",dob: "1950-2-12",gender: "female" ,full_name: "Angela Kulola",)
 
 Appointment.create(date_time: DateTime.now + 1.day, description: "Dental Checkup", patient_id: patient1.id, doctor_id: doctor1.id)
 Appointment.create(date_time: DateTime.now + 2.days, description: "Tooth Extraction", patient_id: patient1.id, doctor_id: doctor1.id)
