@@ -1,21 +1,38 @@
+# class ApplicationController < ActionController::API
+#   include ActionController::Cookies
+
+#   private
+
+#   def current_user
+#     @current_user ||= Patient.find_by(id: session[:patient_id])
+#   end
+
+#   def require_login
+#     unless logged_in?
+#       errors = ["Not logged in"]
+#       render json: { errors: errors }, status: :unauthorized
+#     end
+#   end
+
+#   def logged_in?
+#     #    !session[:user_id].nil?
+#     session.include? :patient_id
+#   end
+# end
+
 class ApplicationController < ActionController::API
-    include ActionController::Cookies
+  include ActionController::Cookies
 
-    private
+  rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
-    def current_user
-        @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
-    end
-  
-    def require_login
-      unless logged_in?
-      errors = ['Not logged in']
-      render json: { errors: errors }, status: :unauthorized
-      end
+  # before_action :authorize
+
+  def authorize
+    # @current_user = Patient.find_by(id: session[:patient_id])
+    render json: { errors: ["Not Authorized"] }, status: :unauthorized unless session.include? patient_id
   end
-  
-  def logged_in?
-  #    !session[:user_id].nil?
-     session.include? :patient_id
+
+  def render_unprocessable_entity_response(invalid)
+    render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
   end
 end
