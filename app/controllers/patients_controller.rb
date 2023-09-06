@@ -1,54 +1,47 @@
 class PatientsController < ApplicationController
-  #before_action :require_login
-  # skip_before_action :authorize, only: [:create, :show]
+  before_action :authorize_patient
+  skip_before_action :authorize_patient, only: :create
 
   def index
-    patients = Patient.all
-    render json: patients
+    render json: Patient.all
   end
 
   def show
-    # render json: @current_user
-
-    patient = Patient.find_by(id: params[:id])
+    # patient = find_patient
+    patient = Patient.find_by(id: session[:patient_id])
     render json: patient, status: :ok
-    # # if patient
-    # #     render json: patient, status: :created
-    # # else
-    # #     render json: { error: "not authorized here" }, status: :unauthorized
-    # # end
   end
 
   def create
-    patient = Patient.new(patient_params)
-    if patient.save
-      session[:patient_id] = patient.id
-      render json: patient, status: :created
-    else
-      render json: { error: "Not created" }, status: :unauthorized
-    end
+    patient = Patient.create!(patient_params)
+
+    session[:patient_id] = patient.id
+    render json: patient, status: :created
   end
 
   def update
-    patient = Patient.find_by(id: params[:patient_id])
-
-    if patient.update!(patient_params)
-      session[:patient_id] = patient.id
-      render json: patient
-    else
-      render json: { error: "Not updated" }, status: :unauthorized
-    end
+    patient = find_patient
+    patient.update!(patient_params)
+    session[:patient_id] = patient.id
+    render json: patient
   end
 
   def destroy
-    patient = Patient.find_by(id: params[:patient_id])
     patient.delete
     head :no_content
   end
 
   private
 
+  def find_patient
+    Patient.find(params[:id])
+  end
+
   def patient_params
-    params.permit(:email, :username, :password, :dob, :gender)
+    params.permit(:email, :username, :password, :dob, :gender, :full_name)
+  end
+
+  def authorize_patient
+    return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :patient_id
   end
 end

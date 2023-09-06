@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   post "/signup", to: "patients#create"
   get "/me", to: "doctors#show"
-  get "/me", to: "patients#show"
+  get "/mepatient", to: "patients#show"
   post "login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
   post "loginDoc", to: "doctor_sessions#create"

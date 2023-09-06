@@ -10,12 +10,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    if logged_in?
-      session.delete :patient_id
-      head :no_content
-    else
-      errors = ["Not logged in"]
-      render json: { errors: errors }, status: :unauthorized
-    end
+    session.delete :patient_id
+    head :no_content
   end
 end

@@ -1,6 +1,4 @@
 class AppointmentsController < ApplicationController
-  #before_action :require_login
-
   def index
     render json: Appointment.all
   end

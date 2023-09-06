@@ -28,10 +28,10 @@ class ApplicationController < ActionController::API
 
   # before_action :authorize
 
-  def authorize
-    # @current_user = Patient.find_by(id: session[:patient_id])
-    render json: { errors: ["Not Authorized"] }, status: :unauthorized unless session.include? :patient_id
-  end
+  # def authorize
+  #   # @current_user = Patient.find_by(id: session[:patient_id])
+  #   render json: { errors: ["Not Authorized"] }, status: :unauthorized unless session.include? :patient_id
+  # end
 
   def render_unprocessable_entity_response(invalid)
     render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
