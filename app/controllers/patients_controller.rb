@@ -1,10 +1,10 @@
 class PatientsController < ApplicationController
-  before_action :require_login 
-  
+  # before_action :require_login 
+
   def index
     patients = Patient.all 
-    render json: patients 
-  end
+    render json: patients  
+  end 
 
   def show 
     patient = Patient.find_by(id: session[:patient_id]) 
@@ -19,17 +19,18 @@ class PatientsController < ApplicationController
     patient = Patient.new(patient_params)
     if patient.save 
       session[:patient_id] = patient.id 
-      render json: patient 
+      render json: patient, status: :created 
     else
       render json: { error: "Not created"}, status: :unauthorized 
     end
   end
 
   def update  
-    patient = Patient.update!(patient_params)
-    if patient
+    patient = Patient.find_by(id: params[:patient_id])
+    
+    if patient.update!(patient_params)
       session[:patient_id] = patient.id 
-      render json: patient 
+      render json: patient
     else
       render json: { error: "Not updated"}, status: :unauthorized 
     end
@@ -43,6 +44,6 @@ class PatientsController < ApplicationController
 
   private 
   def patient_params 
-    params.permit(:email, :username, :dob, :gender) 
+    params.permit(:email, :username, :password, :dob, :gender)  
   end
 end

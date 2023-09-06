@@ -1,4 +1,6 @@
 class DoctorsController < ApplicationController
+  # before_action :require_login 
+
   def index
     doctors = Doctor.all 
     render json: doctors 
@@ -7,21 +9,12 @@ class DoctorsController < ApplicationController
   def show 
     doctor = Doctor.find_by(id: session[:doctor_id]) 
     if doctor
-        render json: doctor, status: :created 
+        render json: doctor 
     else
         render json: { error: "not authorized here" }, status: :unauthorized 
     end 
   end
 
-  # def create 
-  #   doctor = Doctor.new(doctor_params)
-  #   if doctor.save 
-  #     session[:doctor_id] = doctor.id 
-  #     render json: doctor 
-  #   else
-  #     render json: { error: "Not created"}, status: :unauthorized 
-  #   end
-  # end
 
   private
   def doctor_params 
