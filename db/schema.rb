@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_04_093422) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_05_184254) do
   create_table "appointments", force: :cascade do |t|
     t.datetime "date_time"
     t.string "description"
@@ -38,6 +38,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_04_093422) do
     t.string "password_digest"
     t.datetime "dob"
     t.string "gender"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

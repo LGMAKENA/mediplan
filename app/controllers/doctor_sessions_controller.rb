@@ -1,10 +1,10 @@
-class SessionsController < ApplicationController
+class DoctorSessionsController < ApplicationController
 
     def create 
-        patient = User.find_by(username: params[:username])
-        if patient&.authenticate(params[:password])
-            session[:patient_id] = patient.id 
-            render json: patient     
+        doctor = Doctor.find_by(username: params[:username])
+        if doctor&.authenticate(params[:password])
+            session[:doctor_id] = doctor.id 
+            render json: doctor    
         
         else
             errors = ["Invalid username or password"]
@@ -19,11 +19,11 @@ class SessionsController < ApplicationController
 
     def destroy      
        if logged_in?
-        session.delete :patient_id
+        session.delete :doctor_id
         head :no_content 
        else
         errors = ['Not logged in']
         render json: { errors: errors }, status: :unauthorized
        end
     end 
-end 
+end
