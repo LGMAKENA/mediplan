@@ -1,5 +1,5 @@
 class PatientsController < ApplicationController
-  #before_action :authorize_patient
+  before_action :authorize_patient, only: [:create, :update, :destroy]
   #skip_before_action :authorize_patient, only: :create
 
   def index
