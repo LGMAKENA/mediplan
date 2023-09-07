@@ -1,49 +1,47 @@
 class PatientsController < ApplicationController
-  # before_action :require_login 
+  before_action :authorize_patient
+  skip_before_action :authorize_patient, only: :create
 
   def index
-    patients = Patient.all 
-    render json: patients  
-  end 
-
-  def show 
-    patient = Patient.find_by(id: session[:patient_id]) 
-    if patient
-        render json: patient, status: :created 
-    else
-        render json: { error: "not authorized here" }, status: :unauthorized 
-    end 
+    render json: Patient.all
   end
 
-  def create 
-    patient = Patient.new(patient_params)
-    if patient.save 
-      session[:patient_id] = patient.id 
-      render json: patient, status: :created 
-    else
-      render json: { error: "Not created"}, status: :unauthorized 
-    end
+  def show
+    # patient = find_patient
+    patient = Patient.find_by(id: session[:patient_id])
+    render json: patient, status: :ok
   end
 
-  def update  
-    patient = Patient.find_by(id: params[:patient_id])
-    
-    if patient.update!(patient_params)
-      session[:patient_id] = patient.id 
-      render json: patient
-    else
-      render json: { error: "Not updated"}, status: :unauthorized 
-    end
+  def create
+    patient = Patient.create!(patient_params)
+
+    session[:patient_id] = patient.id
+    render json: patient, status: :created
   end
 
-  def destroy 
-    patient = Patient.find_by(id: params[:patient_id])
-    patient.delete 
-    head :no_content 
+  def update
+    patient = find_patient
+    patient.update!(patient_params)
+    session[:patient_id] = patient.id
+    render json: patient
   end
 
-  private 
-  def patient_params 
-    params.permit(:email, :username, :password, :dob, :gender)  
+  def destroy
+    patient.delete
+    head :no_content
+  end
+
+  private
+
+  def find_patient
+    Patient.find(params[:id])
+  end
+
+  def patient_params
+    params.permit(:email, :username, :password, :dob, :gender, :full_name)
+  end
+
+  def authorize_patient
+    return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :patient_id
   end
 end
