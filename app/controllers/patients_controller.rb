@@ -1,6 +1,6 @@
 class PatientsController < ApplicationController
   before_action :authorize_patient
-  skip_before_action :authorize_patient, only: :create
+  skip_before_action :authorize_patient, only: [:create, :index]
 
   def index
     render json: Patient.all
